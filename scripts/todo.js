@@ -69,7 +69,7 @@ window.onload = function() {
 
     // Create an objectStore for this database
 
-    var objectStore = db.createObjectStore("toDoList", { keyPath: "taskTitle" });
+    var objectStore = db.createObjectStore("toDoList", { keyPath: ["taskTitle", "taskTitle2"] });
 
     // define what data items the objectStore will contain
 
@@ -157,7 +157,7 @@ window.onload = function() {
 
       // grab the values entered into the form fields and store them in an object ready for being inserted into the IDB
       var newItem = [
-        { taskTitle: title.value, hours: hours.value, minutes: minutes.value, day: day.value, month: month.value, year: year.value, notified: "no" }
+        { taskTitle: title.value, taskTitle2: title.value, hours: hours.value, minutes: minutes.value, day: day.value, month: month.value, year: year.value, notified: "no" }
       ];
 
       // open a read/write db transaction, ready for adding the data
@@ -177,11 +177,7 @@ window.onload = function() {
 
       // call an object store that's already been added to the database
       var objectStore = transaction.objectStore("toDoList");
-      console.log(objectStore.indexNames);
-      console.log(objectStore.keyPath);
-      console.log(objectStore.name);
-      console.log(objectStore.transaction);
-      console.log(objectStore.autoIncrement);
+      console.log(`keyPath: ${JSON.stringify(objectStore.keyPath)}, keyPath === keyPath: ${objectStore.keyPath === objectStore.keyPath}`);
 
       // Make a request to add our newItem object to the object store
       var objectStoreRequest = objectStore.add(newItem[0]);
